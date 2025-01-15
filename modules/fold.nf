@@ -1,6 +1,5 @@
 process FOLD {
     label 'gpu_high'
-    container "${params.singularity_image}"
     containerOptions """--nv \
         --bind \$PWD:/root/af_input \
         --bind ${params.model_param_dir}:/root/models \
@@ -15,7 +14,7 @@ process FOLD {
 
     script:
     """
-    echo python alphafold3/run_alphafold.py \
+    python alphafold3/run_alphafold.py \
         --json_path=/root/af_input/${json_file} \
         --model_dir=/root/models \
         --db_dir=/root/public_databases \
