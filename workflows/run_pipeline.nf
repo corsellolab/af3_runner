@@ -1,13 +1,21 @@
-include { RUN_MSA } from "../modules/msa.nf"
-include { RUN_FOLD } from "../modules/fold.nf"
+include { MSA } from "../modules/msa.nf"
+include { FOLD } from "../modules/fold.nf"
 
 workflow RUN_PIPELINE {
-    // read sample sheet into channel
-    // TODO: create sample sheet 
+    // Read sample sheet into channel
+    Channel
+        .fromPath(params.sample_sheet)
+        .splitCsv(header: true, sep: '\t')
+        .map { row -> 
+            def run_id = row.run_id
+            def json_path = file(row.json_path)
+            tuple(run_id, json_path)
+        }
+        .set { input_channel }
 
-    // run MSA
-    // TODO: call run MSA
+    // Run MSA
+    MSA(input_channel)
 
-    // run FOLD
-    // TODO: call run FOLD
+    // Run FOLD using output from MSA
+    FOLD(MSA.out)
 }
