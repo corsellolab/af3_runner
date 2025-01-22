@@ -2,6 +2,8 @@
 
 Run AF3 inference on Sherlock (somewhat efficiently).
 
+Nick Phillips (nphill22@stanford.edu)
+
 ## Usage
 
 Basic usage:

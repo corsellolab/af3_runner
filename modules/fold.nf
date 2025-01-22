@@ -19,7 +19,6 @@ process FOLD {
 
     script:
     """
-    mkdir -p output
     python ${params.code_root}/run_alphafold.py \
         --json_path=/root/af_input/${json_file} \
         --model_dir=/root/models \
