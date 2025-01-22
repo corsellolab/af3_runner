@@ -1,6 +1,6 @@
 include { MSA } from "../modules/msa.nf"
 include { FOLD } from "../modules/fold.nf"
-
+include { CACHE_RESOURCES } from "../modules/cache.nf"
 workflow RUN_PIPELINE {
     // Read sample sheet into channel
     Channel
@@ -12,6 +12,9 @@ workflow RUN_PIPELINE {
             tuple(run_id, json_path)
         }
         .set { input_channel }
+
+    // Cache resources
+    CACHE_RESOURCES(params.singularity_image, params.database_root, params.code_root)
 
     // Run MSA
     MSA(input_channel)
