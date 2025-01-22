@@ -14,10 +14,14 @@ workflow RUN_PIPELINE {
         .set { input_channel }
 
     // Cache resources
-    CACHE_RESOURCES(params.singularity_image, params.database_root, params.code_root)
+    CACHE_RESOURCES(
+        params.source_singularity_image, 
+        params.source_database_root, 
+        params.source_code_root
+    )
 
     // Run MSA
-    MSA(input_channel)
+    MSA(input_channel, CACHE_RESOURCES.out.completed)
 
     // Run FOLD using output from MSA
     FOLD(MSA.out)

@@ -92,7 +92,12 @@ mkdir -p "$OUTPUT_DIR"
 
 # Load required modules
 ml reset
-ml nextflow
+ml java/18.0.2
+ml biology
+ml nextflow/23.04.3
+
+# Set the work dir to a subdirectory of the output_dir
+mkdir -p "$OUTPUT_DIR/work"
 
 # Run the nextflow pipeline
 nextflow run main.nf \
@@ -101,4 +106,6 @@ nextflow run main.nf \
     --model_param_dir "$MODEL_PARAM_DIR" \
     --cpu_queue "$CPU_QUEUE" \
     --gpu_queue "$GPU_QUEUE" \
-    --scratch_dir "$SCRATCH_DIR"
+    --scratch_dir "$SCRATCH_DIR" \
+    -work-dir "$OUTPUT_DIR/work" \
+    -resume

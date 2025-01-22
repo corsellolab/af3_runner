@@ -1,5 +1,5 @@
 process FOLD {
-    publishDir "${params.output_dir}/${run_id}", mode: 'copy'
+    publishDir "${params.output_dir}"
     label 'gpu_high'
     container "${params.singularity_image}"
     containerOptions """--nv \
@@ -15,7 +15,7 @@ process FOLD {
     tuple val(run_id), path(json_file)
 
     output: 
-    tuple val(run_id), path("**/*")
+    tuple val(run_id), path("${run_id}")
 
     script:
     """
@@ -24,8 +24,7 @@ process FOLD {
         --json_path=/root/af_input/${json_file} \
         --model_dir=/root/models \
         --db_dir=/root/public_databases \
-        --output_dir=/root/af_input/output \
+        --output_dir=/root/af_input \
         --norun_data_pipeline
-    cd output
     """
 }

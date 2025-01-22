@@ -8,6 +8,7 @@ process MSA {
 
     input:
     tuple val(run_id), path(json_file)
+    val done
 
     output:
     tuple val(run_id), path("output/**/*.json")
