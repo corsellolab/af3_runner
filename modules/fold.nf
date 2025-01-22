@@ -24,7 +24,7 @@ process FOLD {
         --json_path=/root/af_input/${json_file} \
         --model_dir=/root/models \
         --db_dir=/root/public_databases \
-        --output_dir=/root/af_input \
+        --output_dir=/root/af_input/${run_id} \
         --norun_data_pipeline
     """
 }
